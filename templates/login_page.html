@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head><title>Login</title></head>
+<body>
+    <h2>ورود به چت</h2>
+    <input type="text" id="username" placeholder="نام کاربری"><br>
+    <input type="password" id="password" placeholder="رمز عبور"><br>
+    <button onclick="login()">ورود</button>
+
+<script>
+  let socket;
+
+  function connectWebSocket() {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+          alert("❌ لطفاً ابتدا وارد شوید");
+          localStorage.setItem("redirect_after_login", window.location.pathname);
+          window.location.href = "/login_page/";
+          return;
+      }
+
+      socket = new WebSocket(`ws://${window.location.host}/ws/chat/?token=${token}`);
+
+      socket.onopen = () => {
+          console.log("✅ WebSocket وصل شد");
+      };
+
+      socket.onmessage = function(e) {
+          const data = JSON.parse(e.data);
+          if (data.error) {
+              alert(data.error);
+              window.location.href = "/login_page/";
+              return;
+          }
+          const chatBox = document.getElementById('chat-box');
+          const msg = document.createElement('div');
+          msg.innerHTML = `<strong>${data.user}:</strong> ${data.message}`;
+          chatBox.appendChild(msg);
+      };
+  }
+
+  function sendMessage() {
+      const input = document.getElementById('message');
+      const message = input.value.trim();
+      if (!message || socket.readyState !== WebSocket.OPEN) return;
+
+      socket.send(JSON.stringify({ message }));
+      input.value = '';
+  }
+
+  window.onload = () => {
+      connectWebSocket();
+  }
+</script>
+
+</body>
+</html>

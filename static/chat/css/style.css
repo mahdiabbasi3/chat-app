@@ -1,0 +1,45 @@
+body {
+    background: #f5f7fa;
+    font-family: "IRANSans", sans-serif;
+}
+
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    background-color: #f1f1f1;
+}
+
+.chat-input input {
+    flex-grow: 1;
+}
+
+.message {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 80%;
+}
+
+.message strong {
+    color: #0d6efd;
+}
+
+@media (max-width: 576px) {
+    .chat-container {
+        border-radius: 0;
+        margin: 0;
+    }
+    .chat-messages {
+        height: 300px;
+    }
+}
