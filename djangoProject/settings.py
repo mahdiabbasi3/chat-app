@@ -81,7 +81,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],  # همون پورتی که Redis روش ران شده
+            'hosts': [('127.0.0.1', 6379)],  
         },
     },
 }
